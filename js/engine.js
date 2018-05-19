@@ -96,7 +96,7 @@ var Engine = (function(global) {
         player.update();
     }
 
-    /* This function initially draws the "game level", it will then call
+    /* This functidrawImageon initially draws the "game level", it will then call
      * the renderEntities function. Remember, this function is called every
      * game tick (or loop of the game engine) because that's how games work -
      * they are flipbooks creating the illusion of animation but in reality
@@ -133,6 +133,7 @@ var Engine = (function(global) {
                  * We're using our Resources helpers to refer to our images
                  * so that we get the benefits of caching these images, since
                  * we're using them over and over.
+                 * extra:context.drawImage(img,x,y,width,height);
                  */
                 ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
             }
