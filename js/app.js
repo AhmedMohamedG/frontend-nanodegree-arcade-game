@@ -27,13 +27,13 @@ var Enemy = function(x,y) {
             this.flag = true;
         }*/
         if(this.x <= 520 && this.flag === true){
-            Enemy(this.x++, this.y);
+            Enemy(this.x+=2, this.y);
             this.sprite = 'images/enemy-bug-croped.png';
             if(this.x===520){
                 this.flag = false;
             }
         }else if(this.x >=0 && this.flag === false){
-            Enemy(this.x--, this.y);
+            Enemy(this.x-=2, this.y);
             this.sprite = 'images/enemy-bug-croped-fliped.png';
             if(this.x === 0){
                 this.flag=true;
@@ -132,10 +132,16 @@ var player = new character;
 
 
 
-var bug1 = new Enemy(0,220);
-var bug2 = new Enemy(0,305);
-var bug3 = new Enemy(0,140);
+const bug1 = new Enemy(0,220);
+const bug2 = new Enemy(0,305);
+const bug3 = new Enemy(0,140);
 
+const enemy_array = [bug1,bug2,bug3];
+let allEnemies = [];
+enemy_array.forEach(
+    function(enemy,index){
+setTimeout( function(){allEnemies.push(enemy)}, Math.random()* 3000*index )
+});
 
 
 
@@ -165,7 +171,8 @@ console.log( datadata);*/
         // iterate over all pixels
         for(var i = 0, n = data.lengt*/
 );
-var allEnemies = [bug1,bug2,bug3];
+
+
 
 /*character.prototype.move = function(){ return this.addEventListener('keypress', (event) => {
 
