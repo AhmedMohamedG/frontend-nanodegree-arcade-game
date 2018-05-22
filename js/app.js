@@ -11,6 +11,8 @@ var Enemy = function(x,y) {
     this.x=x;
     this.y=y;
     this.sprite = 'images/enemy-bug-croped-fliped.png';
+    this.width = 101;
+    this.height=68;
     this.render = function(){
     return ctx.drawImage(Resources.get(this.sprite),this.x,this.y);
 
@@ -63,13 +65,15 @@ class character{
     constructor(){
        this.x = 200;
        this.y = 400;
-       let body = Resources.get('images/enemy-bug.png');
+       this.height=67;
+       this.width=77;
+       this.sprite = 'images/char-boy-croped.png';
     }
     update(){
     
     }
     render(){
-       ctx.drawImage(Resources.get('images/char-boy-croped.png'), this.x , this.y);
+       ctx.drawImage(Resources.get(this.sprite), this.x , this.y);
     //  ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 
@@ -190,8 +194,8 @@ function checkCollisions(){
           const enemyY=  enemy.y;
           const playerX= player.x;
           const playerY= player.y;
-        const  enemyWidth = 101;
-         const enemyHeight = 68;
+        const  enemyWidth = enemy.width;
+         const enemyHeight = enemy.height;
          const playerHeight=67;
          const playerWeidth=77;
           if( enemyX< playerX + playerWeidth && enemyX + enemyWidth  > playerX &&
