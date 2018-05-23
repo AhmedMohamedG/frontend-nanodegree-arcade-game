@@ -1,31 +1,44 @@
-
-// Enemies our player must avoid
-
-class enemy{
+class Character{
     constructor(x,y){
         this.x=x;
         this.y=y;
+    }
+}
+
+Character.prototype.render = function(sprite,x,y){
+        return ctx.drawImage(Resources.get(sprite),x,y);}
+
+
+// Enemies our player must avoid
+
+class Enemy extends Character{
+    constructor(x,y){
+        super(x,y);
         this.sprite = 'images/enemy-bug-croped-fliped.png';
         this.width = 101;
         this.height=68;
         this.flag= true
 
     }
+    render(){
+    return super.render(this.sprite,this.x,this.y);
+    }
 }
 
 
-enemy.prototype.render = function(){
-    return ctx.drawImage(Resources.get(this.sprite),this.x,this.y);}
-enemy.prototype.update = function(dt){
+/*Enemy.prototype.render = function(){
+    return super.render(this.sprite,this.x,this.y);
+    return ctx.drawImage(Resources.get(this.sprite),this.x,this.y);}*/
+Enemy.prototype.update = function(dt){
 
         if(this.x <= 520 && this.flag === true){
-            new enemy(this.x+=2, this.y);
+            new Enemy(this.x+=2, this.y);
             this.sprite = 'images/enemy-bug-croped.png';
             if(this.x===520){
                 this.flag = false;
             }
         }else if(this.x >=0 && this.flag === false){
-            new enemy(this.x-=2, this.y);
+            new Enemy(this.x-=2, this.y);
             this.sprite = 'images/enemy-bug-croped-fliped.png';
             if(this.x === 0){
                 this.flag=true;
@@ -109,19 +122,22 @@ enemy.prototype.update = function(dt){
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-class character{
+class Hero extends Character{
     constructor(){
-       this.x = 200;
-       this.y = 400;
+       super(200,400);
        this.height=67;
        this.width=77;
        this.sprite = 'images/char-boy-croped.png';
     }
     update(){
+
+        new Hero();
     
     }
     render(){
-       ctx.drawImage(Resources.get(this.sprite), this.x , this.y);
+    return super.render(this.sprite,this.x,this.y);
+
+      // ctx.drawImage(Resources.get(this.sprite), this.x , this.y);
     //  ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 
@@ -134,7 +150,7 @@ class character{
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-character.prototype.handleInput = function(controler){
+Hero.prototype.handleInput = function(controler){
     if(controler){
             switch(controler){
                         case 'ArrowRight':
@@ -153,7 +169,7 @@ character.prototype.handleInput = function(controler){
 
 }
 
-var player = new character; 
+var player = new Hero; 
 
 
 // This listens for key presses and sends the keys to your
@@ -184,9 +200,9 @@ var player = new character;
 
 
 
-const bug1 = new enemy(0,220);
-const bug2 = new enemy(0,305);
-const bug3 = new enemy(0,140);
+const bug1 = new Enemy(0,220);
+const bug2 = new Enemy(0,305);
+const bug3 = new Enemy(0,140);
 
 const enemy_array = [bug1,bug2,bug3];
 let allEnemies = [];
