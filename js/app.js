@@ -1,6 +1,54 @@
 
 // Enemies our player must avoid
-var Enemy = function(x,y) {
+
+class enemy{
+    constructor(x,y){
+        this.x=x;
+        this.y=y;
+        this.sprite = 'images/enemy-bug-croped-fliped.png';
+        this.width = 101;
+        this.height=68;
+        this.flag= true
+
+    }
+}
+
+
+enemy.prototype.render = function(){
+    return ctx.drawImage(Resources.get(this.sprite),this.x,this.y);}
+enemy.prototype.update = function(dt){
+
+        if(this.x <= 520 && this.flag === true){
+            new enemy(this.x+=2, this.y);
+            this.sprite = 'images/enemy-bug-croped.png';
+            if(this.x===520){
+                this.flag = false;
+            }
+        }else if(this.x >=0 && this.flag === false){
+            new enemy(this.x-=2, this.y);
+            this.sprite = 'images/enemy-bug-croped-fliped.png';
+            if(this.x === 0){
+                this.flag=true;
+            }
+            }
+    }
+ 
+    
+    // Variables applied to each of our instances go here,
+    // we've provided one for you to get started
+
+    // The image/sprite for our enemies, this uses
+    // a helper we've provided to easily load images
+    
+
+
+
+
+
+
+
+
+/*var Enemy = function(x,y) {
 
     
     // Variables applied to each of our instances go here,
@@ -18,7 +66,7 @@ var Enemy = function(x,y) {
 
     }
     this.flag= true
-    this.update = function(dt){
+    this.update = function(dt){*/
         /*switch(this.x){
             case 520:
             this.flag = false;
@@ -28,7 +76,7 @@ var Enemy = function(x,y) {
             default:
             this.flag = true;
         }*/
-        if(this.x <= 520 && this.flag === true){
+      /*  if(this.x <= 520 && this.flag === true){
             Enemy(this.x+=2, this.y);
             this.sprite = 'images/enemy-bug-croped.png';
             if(this.x===520){
@@ -43,20 +91,20 @@ var Enemy = function(x,y) {
             }
     }
 
-};
+};*/
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
-Enemy.prototype.update = function(dt) {
+//Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-};
+//};
 
 // Draw the enemy on the screen, required method for game
-Enemy.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
+//Enemy.prototype.render = function() {
+ //   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+//};
 
 // Now write your own player class
 // This class requires an update(), render() and
@@ -136,9 +184,9 @@ var player = new character;
 
 
 
-const bug1 = new Enemy(0,220);
-const bug2 = new Enemy(0,305);
-const bug3 = new Enemy(0,140);
+const bug1 = new enemy(0,220);
+const bug2 = new enemy(0,305);
+const bug3 = new enemy(0,140);
 
 const enemy_array = [bug1,bug2,bug3];
 let allEnemies = [];
