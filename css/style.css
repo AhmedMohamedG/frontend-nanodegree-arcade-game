@@ -1,3 +1,21 @@
 body {
     text-align: center;
+    background-color: yellow;
+    text-align: center;
+    font: 700 1em /1.2 courier monospace  ;
+}
+* {	
+	margin: 0;
+	padding: 0;
+	height: auto;
+	width: auto;
+}
+#passed{
+	color:green;
+}
+#hits{
+	color:red;
+}
+#bestScore{
+	color:blue;
 }

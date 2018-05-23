@@ -1,3 +1,5 @@
+let hits = 0, best_score , score=0;
+
 class Character{
     constructor(x,y){
         this.x=x;
@@ -264,11 +266,14 @@ function checkCollisions(){
          const playerWeidth=77;
           if( enemyX< playerX + playerWeidth && enemyX + enemyWidth  > playerX &&
         enemyY < playerY + playerHeight && enemyY + enemyHeight> playerY) {
-
-            console.log("hit");
                 player.x = 200; 
                 player.y = 400;
+                hits++;
+                document.querySelector("#hits").innerHTML = hits;
           }
+ 
+          
+
 
 
 
@@ -281,3 +286,25 @@ function checkCollisions(){
             }
         });*/
     })};
+
+function checkPassed(){
+          const playerY= player.y;
+     if(playerY===60){
+                player.x = 200; 
+                player.y = 400;
+                score++;
+                document.querySelector("#passed").innerHTML = score;
+                let bestRecord = sessionStorage.getItem("best");
+                if(!(bestRecord) || bestRecord < score ){
+                    sessionStorage.setItem("best", score);
+                }
+        }
+        document.querySelector("#bestScore").innerHTML = sessionStorage.getItem("best");
+}
+
+
+/*function background_to_color(color){
+
+const defcolor = document.body.style.backgroundColor;
+
+}*/
