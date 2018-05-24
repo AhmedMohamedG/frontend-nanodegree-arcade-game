@@ -37,15 +37,12 @@ Enemy.prototype.update = function(dt){
             this.sprite = 'images/enemy-bug-croped.png';
                 if(this.x > 520){
                     this.flag = false;
-                    console.log('false');
                  }
         }else if(this.x >=0 && this.flag === false){
             new Enemy(this.x-=dt*100, this.y);
             this.sprite = 'images/enemy-bug-croped-fliped.png';
                 if(this.x < 0){
                     this.flag=true;
-                                        console.log('true');
-
                 }
         }
 
@@ -114,16 +111,16 @@ class Hero extends Character{
 Hero.prototype.handleInput = function(controler){
     if(controler){
             switch(controler){
-                        case 'ArrowRight':
+                        case /*'ArrowRight'*/39:
                        this.x += 5;
                         break;
-                        case 'ArrowLeft':
+                        case /*'ArrowLeft'*/37:
                         this.x -= 5;
                         break;
-                        case 'ArrowUp':
+                        case /*'ArrowUp'*/38:
                         this.y -= 5;
                         break;
-                        case 'ArrowDown':
+                        case /*'ArrowDown'*/40:
                         this.y += 5;
                     }
        } 
@@ -138,26 +135,21 @@ var player = new Hero;
    Player.handleInput() method. */
 
 
-document.addEventListener('keypress', (event) => {
-  let controler = false;
-
+document.addEventListener('keydown', (event) => {
+   let controler = false;
    if(player.x > 420){
-    player.x--;
+        player.x--;
    }else if(player.x < 20){
-    player.x++;
+        player.x++;
    }else if(player.y < 20){
-    player.y++;
+        player.y++;
    }else if(player.y>440){
-    player.y--;
+        player.y--;
    }else{
-    controler = event.key;
+        controler = event.which;
    }
-
-
    player.handleInput(controler);
-}
-
-);
+});
 
 // Checking collisions between enemy objects and player object.
 
