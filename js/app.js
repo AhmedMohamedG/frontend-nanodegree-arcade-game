@@ -1,19 +1,20 @@
-// Declaring results banner variables
+// Declaring results banner variables.
 
-let hits = 0, best_score , score=0;
-
+let hits = 0, best_score , score =0;
+// Parent class for player and enemy objects.
 class Character{
     constructor(x,y){
         this.x=x;
         this.y=y;
     }
 }
-
+// Adding render method to parent class
 Character.prototype.render = function(sprite,x,y){
-        return ctx.drawImage(Resources.get(sprite),x,y);}
+    return ctx.drawImage(Resources.get(sprite),x,y);
+}
 
-
-// Enemies our player must avoid
+/* Class for enemies our player must avoid 
+   subclass from Character. */
 
 class Enemy extends Character{
     constructor(x,y){
@@ -22,64 +23,59 @@ class Enemy extends Character{
         this.width = 101;
         this.height=68;
         this.flag= true
-
     }
     render(){
     return super.render(this.sprite,this.x,this.y);
     }
 }
 
+// Adding update method to the Enemy class.
 
-/*Enemy.prototype.render = function(){
-    return super.render(this.sprite,this.x,this.y);
-    return ctx.drawImage(Resources.get(this.sprite),this.x,this.y);}*/
-    let stopwatch = 0;
+let stopwatch = 0;
+
 Enemy.prototype.update = function(dt){
-
-stopwatch += dt;
-
-if(dt>=0.015){
-
-
-        if(this.x <= 520 && this.flag === true){
-            new Enemy(this.x+=2, this.y);
-            this.sprite = 'images/enemy-bug-croped.png';
-            if(this.x===520){
-                this.flag = false;
-            }
-        }else if(this.x >=0 && this.flag === false){
-            new Enemy(this.x-=2, this.y);
-            this.sprite = 'images/enemy-bug-croped-fliped.png';
-            if(this.x === 0){
-                this.flag=true;
-            }
+    stopwatch += dt;
+    if(dt>=0.015){
+            if(this.x <= 520 && this.flag === true){
+                new Enemy(this.x+=2, this.y);
+                this.sprite = 'images/enemy-bug-croped.png';
+                    if(this.x===520){
+                        this.flag = false;
+                     }
+            }else if(this.x >=0 && this.flag === false){
+                new Enemy(this.x-=2, this.y);
+                this.sprite = 'images/enemy-bug-croped-fliped.png';
+                    if(this.x === 0){
+                        this.flag=true;
+                    }
             }
             stopwatch = 0;
     }
- }
-    
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
+}
 
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
-    
+// Enemy objects instantiated.
+
+const bug1 = new Enemy(0,220),
+      bug2 = new Enemy(0,305),
+      bug3 = new Enemy(0,140);
+
+const enemy_array = [bug1,bug2,bug3];
+
+//Pushing enemy objects into the allEnemies array with time intervals.
+
+let allEnemies = [];
+
+enemy_array.forEach(
+    function(enemy,index){
+        setTimeout( function(){allEnemies.push(enemy)}, Math.random()* 3000*index )
+});
 
 
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
-//Enemy.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
-//};
-
-// Draw the enemy on the screen, required method for game
 
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
+
+// Player class subclass from Character with update and render methods.
+
 class Hero extends Character{
     constructor(){
        super(200,400);
@@ -88,24 +84,14 @@ class Hero extends Character{
        this.sprite = 'images/char-boy-croped.png';
     }
     update(){
-
         new Hero();
-    
     }
     render(){
-    return super.render(this.sprite,this.x,this.y);
-
-      
-    }
-
-    
+        return super.render(this.sprite,this.x,this.y); 
+    }  
 }
 
-
-
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
+//Handel Input method added to Hero class prototype object.
 
 Hero.prototype.handleInput = function(controler){
     if(controler){
@@ -126,28 +112,12 @@ Hero.prototype.handleInput = function(controler){
 
 }
 
+//instantiating a player object
 var player = new Hero; 
 
 
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
-
-
-
-
-
-const bug1 = new Enemy(0,220);
-const bug2 = new Enemy(0,305);
-const bug3 = new Enemy(0,140);
-
-const enemy_array = [bug1,bug2,bug3];
-let allEnemies = [];
-enemy_array.forEach(
-    function(enemy,index){
-setTimeout( function(){allEnemies.push(enemy)}, Math.random()* 3000*index )
-});
-
-
+/* Addin event listener for key presses and sends the keys to 
+   Player.handleInput() method. */
 
 
 document.addEventListener('keypress', (event) => {
@@ -171,49 +141,56 @@ document.addEventListener('keypress', (event) => {
 
 );
 
-
+// Checking collisions between enemy objects and player object.
 
 function checkCollisions(){
   allEnemies.forEach(function(enemy) {
 
-          const enemyX=  enemy.x;
-          const enemyY=  enemy.y;
-          const playerX= player.x;
-          const playerY= player.y;
-        const  enemyWidth = enemy.width;
-         const enemyHeight = enemy.height;
-         const playerHeight=67;
-         const playerWeidth=77;
+        const enemyX=  enemy.x;
+              enemyY=  enemy.y,
+              playerX= player.x,
+              playerY= player.y,
+              enemyWidth = enemy.width,
+              enemyHeight = enemy.height,
+              playerHeight= player.height,
+              playerWeidth= player.width;
+
           if( enemyX< playerX + playerWeidth && enemyX + enemyWidth  > playerX &&
-        enemyY < playerY + playerHeight && enemyY + enemyHeight> playerY) {
+              enemyY < playerY + playerHeight && enemyY + enemyHeight> playerY){
                 player.x = 200; 
                 player.y = 400;
                 hits++;
                 document.querySelector("#hits").innerHTML = hits;
+                //changing body background color on hits.
                 toggle_body_BGcolor('red');
-
           }
+    })
+};
 
-    })};
-
+// Checking if the player passed to the other side.
 function checkPassed(){
-          const playerY= player.y;
-     if(playerY===60){
-                player.x = 200; 
-                player.y = 400;
-                score++;
-                document.querySelector("#passed").innerHTML = score;
-                let bestRecord = sessionStorage.getItem("best");
-                if(!(bestRecord) || bestRecord < score ){
-                    sessionStorage.setItem("best", score);
-                }
-                        toggle_body_BGcolor('green');
-
+    const playerY= player.y;
+    if(playerY===60){
+        player.x = 200; 
+        player.y = 400;
+        score++;
+        document.querySelector("#passed").innerHTML = score;
+        //getting best score data
+        bestRecord = sessionStorage.getItem("best");
+        //setting best score data
+        if(!(bestRecord) || bestRecord < score ){
+            sessionStorage.setItem("best", score);
         }
+        //Changing body background color.
+        toggle_body_BGcolor('green');
+    }
+    if(sessionStorage.getItem("best")){
         document.querySelector("#bestScore").innerHTML = sessionStorage.getItem("best");
+    }
 }
 
-
+/* A function that toggles the background color of the body 
+ellemnt to a new color then back to  defult color. */
 
 
 function toggle_body_BGcolor(color = false, defcolor = "yellow"){
@@ -225,10 +202,4 @@ function toggle_body_BGcolor(color = false, defcolor = "yellow"){
         document.body.style.backgroundColor = defcolor;
         return;
     }
-
 }
-
-
-
-
-
