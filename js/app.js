@@ -270,6 +270,8 @@ function checkCollisions(){
                 player.y = 400;
                 hits++;
                 document.querySelector("#hits").innerHTML = hits;
+                toggle_body_BGcolor('red');
+
           }
  
           
@@ -298,13 +300,85 @@ function checkPassed(){
                 if(!(bestRecord) || bestRecord < score ){
                     sessionStorage.setItem("best", score);
                 }
+                        toggle_body_BGcolor('green');
+
         }
         document.querySelector("#bestScore").innerHTML = sessionStorage.getItem("best");
 }
 
 
-/*function background_to_color(color){
 
-const defcolor = document.body.style.backgroundColor;
 
-}*/
+function toggle_body_BGcolor(color = false, defcolor = "yellow"){
+
+if( color ){
+     document.body.style.backgroundColor = color;
+     setTimeout(toggle_body_BGcolor,250); 
+}else{
+    document.body.style.backgroundColor = defcolor;
+    return;
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+/*
+
+for(let i = 0 ; i<5, i++){
+
+function toggle_body_BGcolor(color = false, defcolor = "yellow"){
+
+if( color ){
+     document.body.style.backgroundColor = color;
+     console.log(color +'is color');
+     setTimeout(toggle_body_BGcolor,500); 
+     console.log(defcolor +' is defcolor');
+}else{
+    console.log('else');
+    document.body.style.backgroundColor = defcolor;
+    return;
+}
+
+}
+
+}
+
+
+
+
+
+function toggle_BGcolor(color = false, defcolor = "yellow",times=2000){
+
+
+    let toggle_body = setInterval(
+
+        function toggle_body_BGcolor(){
+
+            if( color ){
+                document.body.style.backgroundColor = color;
+                console.log(color +'is color');
+                setTimeout(toggle_body_BGcolor,250); 
+                console.log(defcolor +' is defcolor');
+            }else{
+                console.log('else');
+                document.body.style.backgroundColor = defcolor;
+                return;
+            }
+
+        }, 1000 ,color,defcolor);
+
+    setTimeout(clearInterval(),times,toggle_body);
+
+}
+
+document.addEventListener("onload", toggle_BGcolor('red'));
+
+*/
