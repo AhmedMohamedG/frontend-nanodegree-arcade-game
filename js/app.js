@@ -31,8 +31,26 @@ class Enemy extends Character{
 
 // Adding update method to the Enemy class.
 
-let stopwatch = 0;
+Enemy.prototype.update = function(dt){
+        if(this.x <= 520 && this.flag === true){
+            new Enemy(this.x+=dt*100, this.y);
+            this.sprite = 'images/enemy-bug-croped.png';
+                if(this.x > 520){
+                    this.flag = false;
+                    console.log('false');
+                 }
+        }else if(this.x >=0 && this.flag === false){
+            new Enemy(this.x-=dt*100, this.y);
+            this.sprite = 'images/enemy-bug-croped-fliped.png';
+                if(this.x < 0){
+                    this.flag=true;
+                                        console.log('true');
 
+                }
+        }
+
+}
+/*let stopwatch = 0;
 Enemy.prototype.update = function(dt){
     stopwatch += dt;
     if(dt>=0.015){
@@ -51,7 +69,7 @@ Enemy.prototype.update = function(dt){
             }
             stopwatch = 0;
     }
-}
+}*/
 
 // Enemy objects instantiated.
 
